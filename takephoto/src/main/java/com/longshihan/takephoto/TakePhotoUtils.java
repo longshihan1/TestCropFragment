@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.util.Log;
 
+import com.longshihan.takephoto.listener.OnLoadBitmapListsner;
+import com.longshihan.takephoto.options.CropOptions;
+
 /**
  * Created by LONGHE001.
  *

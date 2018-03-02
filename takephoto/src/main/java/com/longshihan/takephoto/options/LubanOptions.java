@@ -1,4 +1,4 @@
-package com.longshihan.takephoto;
+package com.longshihan.takephoto.options;
 
 import java.io.Serializable;
 

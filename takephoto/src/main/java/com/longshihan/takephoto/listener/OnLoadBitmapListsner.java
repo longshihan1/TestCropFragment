@@ -1,4 +1,6 @@
-package com.longshihan.takephoto;
+package com.longshihan.takephoto.listener;
+
+import com.longshihan.takephoto.CropImage;
 
 /**
  * Created by LONGHE001.

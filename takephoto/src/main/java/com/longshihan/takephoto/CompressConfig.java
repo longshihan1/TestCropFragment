@@ -1,12 +1,13 @@
 package com.longshihan.takephoto;
 
 
+import com.longshihan.takephoto.options.LubanOptions;
+
 import java.io.Serializable;
 
 /**
  * 压缩配置类
  * Author:
- * Date: 2016/6/7 0007 18:01
  */
 public class CompressConfig implements Serializable {
 
@@ -88,6 +89,7 @@ public class CompressConfig implements Serializable {
     public void enableReserveRaw(boolean enableReserveRaw) {
         this.enableReserveRaw = enableReserveRaw;
     }
+
     public static class Builder{
         private CompressConfig config;
         public Builder() {

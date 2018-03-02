@@ -2,6 +2,8 @@ package com.longshihan.takephoto;
 
 import android.content.Context;
 
+import com.longshihan.takephoto.options.LubanOptions;
+
 import java.io.File;
 
 import me.shaohui.advancedluban.Luban;
@@ -64,11 +66,5 @@ public class CompressWithLuBan implements CompressBitmap {
                         listener.onCompressFailed(image, e.getMessage() + " is compress failures");
                     }
                 });
-    }
-
-    private void handleCompressCallBack(File file) {
-        image.compressed = true;
-        image.compressPath = file.getPath();
-        listener.onCompressSuccess(image);
     }
 }

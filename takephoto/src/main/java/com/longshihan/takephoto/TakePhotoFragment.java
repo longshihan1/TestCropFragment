@@ -20,6 +20,9 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.longshihan.takephoto.listener.OnLoadBitmapListsner;
+import com.longshihan.takephoto.options.CropOptions;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -140,7 +143,12 @@ public class TakePhotoFragment extends Fragment {
      * 拍照
      */
     public void selectTakePhoto() {
-        openCamera();//打开相机
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 2);
+        } else {
+            openCamera();//打开相机
+        }
+
     }
 
     private void openCamera() {
@@ -223,6 +231,13 @@ public class TakePhotoFragment extends Fragment {
                     Toast.makeText(getActivity(), "You denied the permission", Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case 2:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openCamera();//打开相机
+                } else {
+                    Toast.makeText(getActivity(), "You denied the permission", Toast.LENGTH_SHORT).show();
+                }
+                break;
             default:
         }
     }
@@ -233,13 +248,25 @@ public class TakePhotoFragment extends Fragment {
         }else {
             CompressWithLuBan luBan=new CompressWithLuBan(getActivity(), compressConfig, image, new CompressBitmap.CompressListener() {
                 @Override
-                public void onCompressSuccess(CropImage image) {
-                    onLoadListener.onLoadBitmap(image);
+                public void onCompressSuccess(final CropImage image) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            onLoadListener.onLoadBitmap(image);
+                        }
+                    });
+
                 }
 
                 @Override
-                public void onCompressFailed(CropImage image, String msg) {
-                    onLoadListener.onLoadFailure(1,msg);
+                public void onCompressFailed(final CropImage image, final String msg) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            onLoadListener.onLoadFailure(1,msg);
+                        }
+                    });
+
                 }
             });
             luBan.compress();
@@ -260,7 +287,6 @@ public class TakePhotoFragment extends Fragment {
         } else {
             selectFromAlbum();//打开相册
         }
-
     }
 
     private void selectFromAlbum() {
