@@ -1,7 +1,10 @@
-package com.longshihan.takephoto;
+package com.longshihan.takephoto.compress;
 
 import android.content.Context;
 
+import com.longshihan.takephoto.CompressConfig;
+import com.longshihan.takephoto.CompressImage;
+import com.longshihan.takephoto.CropImage;
 import com.longshihan.takephoto.options.LubanOptions;
 
 import java.io.File;
@@ -17,7 +20,7 @@ import me.shaohui.advancedluban.OnCompressListener;
  * @function
  */
 
-public class CompressWithLuBan implements CompressBitmap {
+public class CompressWithLuBan implements CompressImage {
     private CropImage image;
     private CompressListener listener;
     private Context context;

@@ -11,12 +11,12 @@ import com.longshihan.takephoto.options.CropOptions;
  * Created by LONGHE001.
  *
  * @time 2018/3/1 0001
- * @des
+ * @des 拍照裁剪入口
  * @function
  */
 
-public class TakePhotoUtils {
-    static final String TAG="TakePhotoUtils";
+public class PhotoGraphUtils {
+    static final String TAG="PhotoGraphUtils";
     private Activity activity;
     private CropOptions cropOptions;
     private OnLoadBitmapListsner onLoadBitmapListsner;
@@ -31,10 +31,10 @@ public class TakePhotoUtils {
      */
     public static class Builder {
 
-        private TakePhotoUtils target;
+        private PhotoGraphUtils target;
 
         public Builder() {
-            target = new TakePhotoUtils();
+            target = new PhotoGraphUtils();
         }
 
         public Builder setActivity(Activity activity) {
@@ -67,7 +67,7 @@ public class TakePhotoUtils {
          * 生成fragmnet对象
          * @return
          */
-        public TakePhotoUtils build(){
+        public PhotoGraphUtils build(){
             target.fragment=findTakePhotoFragment(target.activity);
             boolean isNewInstance=target.fragment==null;
             if (isNewInstance){

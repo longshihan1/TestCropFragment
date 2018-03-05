@@ -20,8 +20,11 @@ import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.longshihan.takephoto.compress.CompressWithCustomer;
+import com.longshihan.takephoto.compress.CompressWithLuBan;
 import com.longshihan.takephoto.listener.OnLoadBitmapListsner;
 import com.longshihan.takephoto.options.CropOptions;
+import com.longshihan.takephoto.utils.ThreadUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by LONGHE001.
  *
  * @time 2018/3/1 0001
- * @des
+ * @des 处理拍照裁剪的fragment，自带权限认定
  * @function
  */
 
@@ -48,6 +51,7 @@ public class TakePhotoFragment extends Fragment {
     private boolean isClickCamera;//是否是拍照裁剪
     private CropOptions cropOptions;
     private CompressConfig compressConfig;
+    private CompressImage compressImage;
 
     public TakePhotoFragment() {
 
@@ -245,31 +249,70 @@ public class TakePhotoFragment extends Fragment {
     public void takeResult(CropImage image) {
         if (null == compressConfig) {
             onLoadListener.onLoadBitmap(image);
-        }else {
-            CompressWithLuBan luBan=new CompressWithLuBan(getActivity(), compressConfig, image, new CompressBitmap.CompressListener() {
+        }else if (compressConfig.getLubanOptions()!=null){
+            compressImage=new CompressWithLuBan(getActivity(), compressConfig, image, new CompressImage.CompressListener() {
                 @Override
                 public void onCompressSuccess(final CropImage image) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            onLoadListener.onLoadBitmap(image);
-                        }
-                    });
-
+                    if (ThreadUtils.isMainThread()){
+                        onLoadListener.onLoadBitmap(image);
+                    }else {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                onLoadListener.onLoadBitmap(image);
+                            }
+                        });
+                    }
                 }
 
                 @Override
                 public void onCompressFailed(final CropImage image, final String msg) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            onLoadListener.onLoadFailure(1,msg);
-                        }
-                    });
-
+                    if (!ThreadUtils.isMainThread()) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                onLoadListener.onLoadFailure(1, msg);
+                            }
+                        });
+                    }else {
+                        onLoadListener.onLoadFailure(1, msg);
+                    }
                 }
             });
-            luBan.compress();
+            compressImage.compress();
+        }else if (compressConfig.getCustomOptions()!=null){
+            compressImage=new CompressWithCustomer(getActivity(), compressConfig, image, new CompressImage.CompressListener() {
+                @Override
+                public void onCompressSuccess(final CropImage image) {
+                    if (ThreadUtils.isMainThread()){
+                        onLoadListener.onLoadBitmap(image);
+                    }else {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                onLoadListener.onLoadBitmap(image);
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCompressFailed(CropImage image, final String msg) {
+                    if (!ThreadUtils.isMainThread()) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                onLoadListener.onLoadFailure(1, msg);
+                            }
+                        });
+                    }else {
+                        onLoadListener.onLoadFailure(1, msg);
+                    }
+                }
+            });
+            compressImage.compress();
+        }else {
+            onLoadListener.onLoadBitmap(image);
         }
     }
 

@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 /**
  * 裁剪配置类
- * Author:
- * Date: 2016/7/27 13:19
  */
 public class CropOptions implements Serializable {
     private int aspectX;

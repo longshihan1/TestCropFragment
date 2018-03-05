@@ -8,7 +8,7 @@ package com.longshihan.takephoto;
  * @function
  */
 
-public interface CompressBitmap {
+public interface CompressImage {
     void compress();
 
     /**

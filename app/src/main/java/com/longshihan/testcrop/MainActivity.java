@@ -12,13 +12,13 @@ import com.longshihan.takephoto.CropImage;
 import com.longshihan.takephoto.options.CropOptions;
 import com.longshihan.takephoto.options.LubanOptions;
 import com.longshihan.takephoto.listener.OnLoadBitmapListsner;
-import com.longshihan.takephoto.TakePhotoUtils;
+import com.longshihan.takephoto.PhotoGraphUtils;
 
 public class MainActivity extends AppCompatActivity {
     Button takeBtn;//打开相机按钮
     Button albumBtn;//选择相册按钮
     ImageView iv;//裁剪完照片展示控件
-    TakePhotoUtils takePhotoUtils;
+    PhotoGraphUtils photoGraphUtils;
     private CompressConfig config;
 
     @Override
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 .create();
         config= CompressConfig.ofLuban(option);
 
-        takePhotoUtils=new TakePhotoUtils.Builder()
+        photoGraphUtils =new PhotoGraphUtils.Builder()
                 .setActivity(this)
                 .setOnLoadBitmapListsner(new OnLoadBitmapListsner() {
                     @Override
@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.take_btn:
-                takePhotoUtils.selectTakePhoto();
+                photoGraphUtils.selectTakePhoto();
                 break;
             case R.id.album_btn:
-                takePhotoUtils.selectAlbumPhoto();
+                photoGraphUtils.selectAlbumPhoto();
                 break;
         }
     }
