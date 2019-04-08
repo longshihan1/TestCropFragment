@@ -109,7 +109,9 @@ public class TakePhotoFragment extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        if(!file.exists()){
+            return;
+        }
         outputUri = Uri.fromFile(file);
         Intent intent = new Intent("com.android.camera.action.CROP");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -131,9 +133,13 @@ public class TakePhotoFragment extends Fragment {
         // 裁剪后输出图片的尺寸大小
         if (cropOptions.getOutputX() != 0) {
             intent.putExtra("outputX", cropOptions.getOutputX());
+        }else {
+            intent.putExtra("outputX", 200);
         }
         if (cropOptions.getOutputY() != 0) {
             intent.putExtra("outputY", cropOptions.getOutputY());
+        }else {
+            intent.putExtra("outputY", 200);
         }
         intent.putExtra("scale", true);//支持缩放
         intent.putExtra("return-data", false);

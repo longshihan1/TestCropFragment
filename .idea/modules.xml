@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TestCrop.iml" filepath="$PROJECT_DIR$/TestCrop.iml" />
+      <module fileurl="file://D:\project\0114\TestCropFragment\TestCrop.iml" filepath="D:\project\0114\TestCropFragment\TestCrop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestCropFragment.iml" filepath="$PROJECT_DIR$/TestCropFragment.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/takephoto/takephoto.iml" filepath="$PROJECT_DIR$/takephoto/takephoto.iml" />
     </modules>

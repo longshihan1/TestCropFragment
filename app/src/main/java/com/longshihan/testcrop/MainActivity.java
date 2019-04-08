@@ -2,6 +2,7 @@ package com.longshihan.testcrop;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         albumBtn=findViewById(R.id.album_btn);
         iv=findViewById(R.id.iv);
         LubanOptions option=new LubanOptions.Builder()
-                .setMaxHeight(180)
-                .setMaxWidth(180)
+                .setMaxHeight(200)
+                .setMaxWidth(200)
                 .setMaxSize(60000)
                 .create();
         config= CompressConfig.ofLuban(option);
@@ -40,16 +41,18 @@ public class MainActivity extends AppCompatActivity {
                 .setOnLoadBitmapListsner(new OnLoadBitmapListsner() {
                     @Override
                     public void onLoadBitmap(CropImage image) {
+                        Log.i("测试","："+image.compressPath);
                         Glide.with(MainActivity.this).load(image.compressPath).into(iv);
                     }
 
                     @Override
                     public void onLoadFailure(int type, String msg) {
                         //错误
+                        Log.i("测试",type+"："+msg);
                     }
                 })
                 .setCompressConfig(config)
-                .setCropOption(new CropOptions.Builder().setAspectX(1).setAspectY(1).setOutputX(160).setAspectY(160).create())
+                .setCropOption(new CropOptions.Builder().create())
                 .build();
     }
 

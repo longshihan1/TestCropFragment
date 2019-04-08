@@ -26,7 +26,7 @@ public class PhotoGraphUtils {
 
 
     /**
-     * Student的创建完全依靠Student.Builder，使用一种方法链的方式来创建
+     * 的创建完全依靠Student.Builder，使用一种方法链的方式来创建
      *
      */
     public static class Builder {
