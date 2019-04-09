@@ -41,18 +41,18 @@ public class MainActivity extends AppCompatActivity {
                 .setOnLoadBitmapListsner(new OnLoadBitmapListsner() {
                     @Override
                     public void onLoadBitmap(CropImage image) {
-                        Log.i("测试","："+image.compressPath);
-                        Glide.with(MainActivity.this).load(image.compressPath).into(iv);
+                        if (image != null) {
+                            Glide.with(MainActivity.this).load(image.compressPath).into(iv);
+                        }
                     }
 
                     @Override
                     public void onLoadFailure(int type, String msg) {
                         //错误
-                        Log.i("测试",type+"："+msg);
                     }
                 })
                 .setCompressConfig(config)
-                .setCropOption(new CropOptions.Builder().create())
+                .setCropOption(new CropOptions.Builder().setOutputX(500).setOutputY(500).create())
                 .build();
     }
 

@@ -119,12 +119,12 @@ public class TakePhotoFragment extends Fragment {
         }
         intent.setDataAndType(uri, "image/*");
         //裁剪图片的宽高比例
-        if (cropOptions.getAspectX() != 0) {
+        if (cropOptions.getAspectX() >1) {
             intent.putExtra("aspectX", cropOptions.getAspectX());
         } else {
             intent.putExtra("aspectX", 1);
         }
-        if (cropOptions.getAspectY() != 0) {
+        if (cropOptions.getAspectY() >1) {
             intent.putExtra("aspectY", cropOptions.getAspectY());
         } else {
             intent.putExtra("aspectY", 1);

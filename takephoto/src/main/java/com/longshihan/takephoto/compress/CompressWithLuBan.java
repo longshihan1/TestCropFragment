@@ -25,7 +25,7 @@ public class CompressWithLuBan implements CompressImage {
     private CompressListener listener;
     private Context context;
     private LubanOptions options;
-    private File file =null;
+    private File file = null;
 
     public CompressWithLuBan(Context context, CompressConfig config, CropImage images,
                              CompressListener listener) {
@@ -41,12 +41,12 @@ public class CompressWithLuBan implements CompressImage {
             listener.onCompressFailed(image, " images is null");
             return;
         }
-        file=new File(image.originalPath);
+        file = new File(image.originalPath);
         compressOne();
     }
 
     private void compressOne() {
-        Luban.compress(context,file)
+        Luban.compress(context, file)
                 .putGear(Luban.CUSTOM_GEAR)
                 .setMaxHeight(options.getMaxHeight())
                 .setMaxWidth(options.getMaxWidth())
@@ -59,9 +59,13 @@ public class CompressWithLuBan implements CompressImage {
 
                     @Override
                     public void onSuccess(File file) {
-                        image.compressPath = file.getPath();
-                        image.compressed = true;
-                        listener.onCompressSuccess(image);
+                        if (file != null && file.exists()) {
+                            image.compressPath = file.getPath();
+                            image.compressed = true;
+                            listener.onCompressSuccess(image);
+                        } else {
+                            listener.onCompressFailed(image, "file is no exits");
+                        }
                     }
 
                     @Override
